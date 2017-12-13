@@ -1,0 +1,58 @@
+<atlassian-plugin key="${atlassian.plugin.key}" name="${project.name}" plugins-version="2">
+    <plugin-info>
+        <description>${project.description}</description>
+        <version>${project.version}</version>
+        <vendor name="${project.organization.name}" url="${project.organization.url}" />
+        <param name="plugin-icon">images/pluginIcon.png</param>
+        <param name="plugin-logo">images/pluginLogo.png</param>
+    </plugin-info>
+
+    <resource type="i18n" name="i18n" location="i18n/restricted-content"/>
+    <resource type="download" name="images/" location="/images"/>
+
+    <web-resource key="macro-override" name="macro-override">
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>confluence.editor.actions:editor-macro-browser</dependency>
+        <dependency>com.atlassian.confluence.plugins.confluence-ui-components:user-group-select2</dependency>
+
+        <resource type="download" name="restricted-content.css"    location="/css/restricted-content.css"/>
+        <resource type="download" name="restricted-content.js"     location="/js/restricted-content.js"/>
+
+        <context>macro-browser</context>
+    </web-resource>
+
+    <web-resource key="resources" name="resources">
+        <transformation extension="soy">
+            <transformer key="soyTransformer">
+                <functions>com.atlassian.confluence.plugins.soy:soy-core-functions</functions>
+            </transformer>
+        </transformation>
+        <transformation extension="js">
+            <transformer key="jsI18n"/>
+        </transformation>
+
+        <dependency>com.atlassian.auiplugin:ajs</dependency>
+        <dependency>com.atlassian.auiplugin:aui-experimental-soy-templates</dependency>
+        
+        <resource type="download" name="restricted-content.soy.js" location="/templates/macros.soy"/>
+        <resource type="download" name="images/"                location="/images"/>
+
+        <context>restricted-content</context>
+    </web-resource>
+
+﻿   <xhtml-macro name="restricted-content" class="com.mesilat.RestrictedContentMacro"
+        key="restricted-content" state="enabled"
+        icon="/download/resources/com.mesilat.restricted-content/images/pluginLogo.png">
+    ﻿   <resource type="i18n" name="i18n" location="/i18n/restricted-content"/>
+﻿       <category name="formatting"/>
+﻿       <category name="confluence-content"/>
+        <description key="com.mesilat.restricted-content.restricted-content.desc"></description>
+        <parameters>
+            <parameter name="permissions" type="string"/>
+            <parameter name="message" type="string"/>
+        </parameters>
+    </xhtml-macro>
+
+    <rest key="rest" path="/restricted-content" version="1.0" name="rest">
+    </rest>
+</atlassian-plugin>

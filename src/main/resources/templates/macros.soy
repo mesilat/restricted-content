@@ -1,0 +1,15 @@
+{namespace Mesilat.RestrictedContent.Templates}
+
+/**
+* No permission template
+* 
+* @param message
+*/
+{template .noPermission}
+{call aui.message.warning}
+    {param closeable: 'true' /}
+    {param content}
+        <p>{$message}</p>
+    {/param}
+{/call}
+{/template}
